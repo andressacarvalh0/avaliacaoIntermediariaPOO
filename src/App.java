@@ -56,24 +56,18 @@ public class App{
         return true;
     }
 
-    private static void localizarPilotoCPF() throws PilotoNaoEncontradoException {
+    private static Piloto localizarPilotoCPF() throws PilotoNaoEncontradoException {
 
         System.out.println("Digite o CPF do piloto: ");
         pesquisa = scanner.nextLine();
         for (Piloto piloto: _pilotos) {
             if (piloto != null && piloto.getCpf().equals(pesquisa)) {
                 System.out.println(piloto);
+                return (piloto);
             }
         }
         throw new PilotoNaoEncontradoException(pesquisa);
         }
-        /*boolean status = false;    
-        for(int i = 0; i < _pilotos.length; i++){
-            status = _pilotos[i].equals(pesquisa);
-            if (status) break;
-            System.out.println(_pilotos[i]);      
-        }*/
-
     private static void aumentarEspaçoArmazenamento(){
         System.out.println("Aumento capacidade de armazenamento");
         System.out.println("Informe a capacidade de armazenamento desejada:");
