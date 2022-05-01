@@ -2,6 +2,7 @@ package src;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import src.Controle.Impl.Piloto;
+import src.Controle.Impl.Excecoes.PilotoNaoEncontradoException;
 
 public class App{
     private static Scanner scanner = new Scanner(System.in);
@@ -34,10 +35,10 @@ public class App{
                 listarPilotosCadastrados();
                 break;
             }
-            /*case 3: {
+            case 3: {
                 localizarPilotoCPF();
                 break;
-            }*/
+            }
             case 4: {
                 aumentarEspaçoArmazenamento();
                 break;
@@ -55,13 +56,23 @@ public class App{
         return true;
     }
 
-    /*private static void localizarPilotoCPF(){
-        System.out.println("Digite o nome do contato a ser pesquisado: ");
-        String pesquisa = scanner.nextLine();
-        if (Piloto.contains(pesquisa));
-            System.out.println(_pilotos[i]);
-            System.out.println(pesquisa + "não contém na lista: ");
-    }*/
+    private static void localizarPilotoCPF() throws PilotoNaoEncontradoException {
+
+        System.out.println("Digite o CPF do piloto: ");
+        pesquisa = scanner.nextLine();
+        for (Piloto piloto: _pilotos) {
+            if (piloto != null && piloto.getCpf().equals(pesquisa)) {
+                System.out.println(piloto);
+            }
+        }
+        throw new PilotoNaoEncontradoException(pesquisa);
+        }
+        /*boolean status = false;    
+        for(int i = 0; i < _pilotos.length; i++){
+            status = _pilotos[i].equals(pesquisa);
+            if (status) break;
+            System.out.println(_pilotos[i]);      
+        }*/
 
     private static void aumentarEspaçoArmazenamento(){
         System.out.println("Aumento capacidade de armazenamento");
@@ -71,14 +82,15 @@ public class App{
             System.out.println("\nA capacidade atual de armazenamento é igual ou superior a solicitada.");    
         }
         else {capacidadeArmazanamento = capacidadeSolicitada;
-        System.out.println("\nCapacidade aumentada para " + capacidadeArmazanamento);}
+        System.out.println("\nCapacidade aumentada para " + capacidadeArmazanamento);
     }
-    private static void listarPilotosCadastrados() {
+    }
+    private static void listarPilotosCadastrados(){
         if (_numeroPilotos == 0) {
             System.out.println("\nNão há pilotos cadastrados para exibir.");
         }
         else{System.out.println("Lista de pilotos cadastrados:");
-        for (int i = 0; i < _numeroPilotos; i++) {
+        for (int i = 0; i <= _numeroPilotos; i++) {
         System.out.println(_pilotos[i]);}}
     }
     private static void adicionarPilotoNaLista(Piloto piloto) {
@@ -90,7 +102,6 @@ public class App{
     // Se não tem mais espaço no vetor, caio fora
         if (_numeroPilotos== _pilotos.length) {
             System.out.println("\nNão há espaço para cadastrar novos pilotos.");
-            imprimirMenu();
         }
         else{System.out.println("Cadastrar Piloto");
             System.out.println("Nome: ");
@@ -101,7 +112,8 @@ public class App{
             String cpf = scanner.nextLine();
 
             Piloto piloto = new Piloto(nome, cht, cpf);
-            adicionarPilotoNaLista(piloto);}
+            adicionarPilotoNaLista(piloto);
+            System.out.println("Piloto cadastrado com sucesso");}
         }
 
     private static void imprimirMenu() {
