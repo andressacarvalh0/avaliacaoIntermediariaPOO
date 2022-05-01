@@ -59,6 +59,7 @@ public class App{
     private static Piloto localizarPilotoCPF() throws PilotoNaoEncontradoException {
 
         System.out.println("Digite o CPF do piloto: ");
+        //percorre lista para encontrar piloto 
         pesquisa = scanner.nextLine();
         for (Piloto piloto: _pilotos) {
             if (piloto != null && piloto.getCpf().equals(pesquisa)) {
@@ -66,12 +67,14 @@ public class App{
                 return (piloto);
             }
         }
+        // se não encontra chama exceção
         throw new PilotoNaoEncontradoException(pesquisa);
         }
     private static void aumentarEspaçoArmazenamento(){
         System.out.println("Aumento capacidade de armazenamento");
         System.out.println("Informe a capacidade de armazenamento desejada:");
         capacidadeSolicitada = scanner.nextInt();
+        //Valida se armazenamento solicitado não é inferior ao atual
         if(capacidadeSolicitada<=capacidadeArmazanamento){
             System.out.println("\nA capacidade atual de armazenamento é igual ou superior a solicitada.");    
         }
@@ -80,6 +83,7 @@ public class App{
     }
     }
     private static void listarPilotosCadastrados(){
+        //Valida se tem piloto cadastrado na lista
         if (_numeroPilotos == 0) {
             System.out.println("\nNão há pilotos cadastrados para exibir.");
         }
@@ -93,10 +97,11 @@ public class App{
         _numeroPilotos++;
     }
     private static void cadastrarPiloto() throws InputMismatchException {
-    // Se não tem mais espaço no vetor, caio fora
+    // Verifica espaço de armaznamento
         if (_numeroPilotos== _pilotos.length) {
             System.out.println("\nNão há espaço para cadastrar novos pilotos.");
         }
+        //Cadastro do piloto
         else{System.out.println("Cadastrar Piloto");
             System.out.println("Nome: ");
             String nome = scanner.nextLine();
@@ -105,11 +110,12 @@ public class App{
             System.out.println("CPF: ");
             String cpf = scanner.nextLine();
 
+            //Salvando piloto na lista
             Piloto piloto = new Piloto(nome, cht, cpf);
             adicionarPilotoNaLista(piloto);
             System.out.println("Piloto cadastrado com sucesso");}
         }
-
+    //Menu inicial
     private static void imprimirMenu() {
         System.out.println("\n****\nMENU\n****\n");
         System.out.println("1 - Cadastrar piloto");
@@ -122,7 +128,7 @@ public class App{
     private static boolean validarOpcaoMenu(int opcao) {
         return (opcao >= 0 && opcao <= 4);
     }
-
+    //Validando opção informada
     private static int lerOpcao() {
         int opcao = 0;
         do {
